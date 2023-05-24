@@ -1,0 +1,43 @@
+import numpy as np
+import pandas as pd
+
+df= pd.read_csv("train.csv")
+df
+#check dimensions of the dataframe
+df.shape
+df.columns
+df.size
+df.dtypes
+df.isnull().sum()
+df.describe() #check the initial statistics
+df.info() # print info about the dataframe
+# Handling missing values
+# fillna(): using this method we can replace null(NaN) values with some other
+# interpolate(): performs linear interpolation we can change null with result
+# dropna(): It will drop all rows that have NaN values
+
+df["Cabin"]=df["Cabin"].replace(to_replace=np.nan,value="unknown")
+# we've replaced the null or nan value with unknown
+
+df["Age"] = df["Age"].interpolate()  # this will replace the null values with result
+df["Embarked"].fillna(method="ffill",inplace=True) # ffill means forward fill this will replace missing values of the embarked column 
+df
+
+#changing the datatypes
+df["Age"]=df["Age"].astype("int64")
+df.dtypes
+
+# Turning the categorical variables into quantitive
+quantitative_data = pd.get_dummies(df.Embarked,prefix="Embarked")
+# convert categorical data into dummy variables for every unique category it will create binary column
+
+df=df.join(quantitative_data) # this will join the quantitative dataframe to df
+df
+
+df.drop(['Embarked'],axis=1,inplace=True) # delete the column Embarked
+
+quantitative_sex = pd.get_dummies(df.Sex,prefix="Sex")
+quantitative_sex
+
+df = df.join(quantitative_sex)
+df

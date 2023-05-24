@@ -1,0 +1,17 @@
+import numpy as np
+import pandas as pd
+import matplotlib. pyplot as plt
+%matplotlib inline
+import seaborn as sns
+
+df = pd.read_csv("iris.csv")
+df
+
+sns.distplot(df['SepalLengthCm'])  # repeat the same for the other 3 features
+plt.hist(df['SepalLengthCm'])  # repeat the same for the other 3 features
+sns.boxplot(df['SepalLengthCm'])  # repeat the same for the other 3 features
+sns.boxplot(data=df, x=df['SepalLengthCm'], y=df['Species'])   # repeat the same but x=Species and y=SepalWidthCm
+
+# repeat the above command written as a comment, but for the following parameters :
+# 1) x=species, y=petalwidthcm
+# 2) x=species, y=petallengthcm

@@ -1,0 +1,87 @@
+from textblob import TextBlob
+import nltk
+
+b = TextBlob("I havv good speling")
+b.correct()
+
+b1 = TextBlob("Beautiful is better than ugly."
+             "Explicit is better than implicit."
+             "Simple is better than complex.")
+b1.words
+
+b1.sentences
+
+sentence = TextBlob("Use 4 spaces per indentation level")
+sentence.words
+
+sentence.words[2].singularize()
+
+sentence.words[5].pluralize()
+
+b2 = TextBlob("And now for something completely different.")
+print(b2.parse())
+
+b1.upper()
+b1.find("Simple")
+
+blob = TextBlob("Now is better than never")
+blob.ngrams(n=3)
+
+from nltk import tokenize
+from nltk.tokenize import sent_tokenize
+
+text = """Good day everyone, how are you all today? It's so fun learning data science. Hope you are practising well."""
+text
+
+tokenized_text = sent_tokenize(text)
+tokenized_text
+
+from nltk.tokenize import word_tokenize
+tokenized_words = word_tokenize(text)
+print(tokenized_words)
+
+from nltk.probability import FreqDist
+fdist = FreqDist(tokenized_words)
+fdist
+
+fdist.most_common(4)
+
+import matplotlib.pyplot as plt
+fdist.plot(30, cumulative=False)
+plt.show()
+
+from nltk.corpus import stopwords
+stop_words = set(stopwords.words('english'))
+print(stop_words)
+
+filtered_sent = []
+for w in tokenized_words:
+    if w not in stop_words:
+        filtered_sent.append(w)
+        
+print(f"Tokenized sentence: {tokenized_words}")
+print(f"Filtered sentence: {filtered_sent}")
+
+
+from nltk.stem import PorterStemmer
+from nltk.tokenize import sent_tokenize, word_tokenize
+
+ps = PorterStemmer()
+stemmed = []
+for w in filtered_sent:
+    stemmed.append(ps.stem(w))
+    
+print(f"Filtered sentence: {filtered_sent}")
+print(f"Stemmed sentence: {stemmed}")
+
+from nltk.stem.wordnet import WordNetLemmatizer
+lemma = WordNetLemmatizer()
+word = "flying"
+print(f"Lemmatized Word: {lemma.lemmatize(word, 'v')}")
+print(f"Stemmed Word: {ps.stem(word)}")
+
+sent = "Albert Einstein was born in Ulm, Germany in 1879."
+tokens = nltk.word_tokenize(sent)
+tokens
+
+nltk.pos_tag(tokens)

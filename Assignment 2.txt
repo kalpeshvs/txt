@@ -1,0 +1,56 @@
+import pandas as pd
+import numpy as np
+data = {
+   'StudentID': [1, 2, 3, 4, 5],
+    'Age': [18, 19, np.nan, 18, 19],
+    'Gender': ['Male', 'Female', 'Male', 'Female', 'Male'],
+    'Grade Level': [12, 11, 13, 10, 11],
+    'Test Score': [85, 92, 78, np.nan, 50, 110, 200, 95],
+    'Absent Day': [2, np.nan, 3, 0, 2],
+    'Study Hours': [4, 5, 3, 6, 4],
+    'GPA': [3.7, 3.9, 3.2, np.nan, 3.8]
+}
+
+type(data)
+
+df = pd.DataFrame.from_dict(data)
+
+df.shape
+
+df.dtypes
+
+df.isnull().sum()
+
+df['Age'] = df['Age'].interpolate()
+df['Test Score'] = df['Test Score'].interpolate()
+df['GPA'] = df['GPA'].interpolate()
+
+df['Absent Day'] = df['Absent Day'].fillna(method='ffill')
+
+cols = ['Age', 'Test Score', 'Absent Day', 'GPA']
+
+for i in cols:
+    df[i] = df[i].astype('int64')
+    
+df.dtypes
+
+quant_data = pd.get_dummies(df.Gender, prefix='Gender')
+
+df = df.join(quant_data)
+df.drop(['Gender'], axis=1, inplace=True)
+
+df['Gender_Female'] = df['Gender_Female'].astype('int64')
+df['Gender_Male'] = df['Gender_Male'].astype('int64')
+
+df.dtypes
+
+# Adding outliers
+df['Test Score'] = df['Test Score'].append(pd.Series([300, 80]))
+
+# Calculating z-scores
+df['Test Score Z-Score'] = zscore(df['Test Score'])
+
+# Removing outliers
+threshold = 3  # Set the z-score threshold for identifying outliers
+df = df[np.abs(df['Test Score Z-Score']) <= threshold]
+df.drop('Test Score Z-Score', axis=1, inplace=True)

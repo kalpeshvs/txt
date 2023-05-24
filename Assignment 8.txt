@@ -1,0 +1,25 @@
+import numpy as np
+import pandas as pd
+import matplotlib. pyplot as plt
+%matplotlib inline
+import seaborn as sns
+
+df = pd.read_csv("train.csv")
+df
+sns.distplot(df['Pclass'])
+
+# repeat the above command but for : 
+# 1) df['Age']
+# 2) df['Age', bins=40]
+# 3) df['Age', bins=20, kde=False, rug=True]
+
+sns.jointplot(x=df['Age'], y=df['Fare'], kind='scatter')
+
+# repeat the above command but for kind='hex'
+
+sns.pairplot(df)
+
+sns.barplot(x=df['Sex'], y=df['Fare'])
+sns.countplot(df['Pclass'])
+
+sns.distplot(df['Fare'], hist=True)

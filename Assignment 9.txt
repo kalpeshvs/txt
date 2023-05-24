@@ -1,0 +1,20 @@
+import numpy as np
+import pandas as pd
+import matplotlib. pyplot as plt
+%matplotlib inline
+import seaborn as sns
+
+df = pd.read_csv("train.csv")
+df
+
+df.shape
+df.columns
+df.info()
+df.isnull().sum()
+sns.countplot(df['Sex']) # then repeat this same command, but for df['Survived']
+df['Sex'].value_counts().plot(kind='pie', autopct='%.2f')  # then repeat the same command but for df['Survived']
+sns.barplot(df['Survived'], df['Age'])  # repeat the same command for df['Sex'] and df['Survived']
+sns.barplot(df['Sex'], df['Age'], hue=df['Survived'])
+sns.boxplot(df['Sex'], df['Age'])  # repeat the same command for df['Sex'], df['Age'] and df['Survived']
+sns.heatmap(pd.crosstab(df['Sex'], df['Survived']))  # repeat for (Age, Survived)
+sns.clustermap(pd.crosstab(df['Age'], df['Survived']))  # repeat the same for (Sex, Survived)

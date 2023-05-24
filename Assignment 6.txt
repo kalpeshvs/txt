@@ -1,0 +1,49 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+%matplotlib inline
+import seaborn as sns
+df = pd.read_csv("iris.csv")
+df
+
+sns.relplot(data=df, x='SepalWidthCm', y='SepalLengthCm', hue='Species')
+# repeat the same command above but with PetalWidthCm and PetalLengthCm in x and y respectively.
+sns.pairplot(df, hue='Species')
+
+plt.figure(figsize=(15,10))
+plt.subplot(2,2,1)
+sns.boxplot(data=df, x='Species', y='PetalLengthCm')
+
+plt.subplot(2,2,2)
+sns.boxplot(data=df, x='Species', y='PetalWidthCm')
+
+plt.subplot(2,2,3)
+sns.boxplot(data=df, x='Species', y='SepalLengthCm')
+
+plt.subplot(2,2,4)
+sns.boxplot(data=df, x='Species', y='SepalWidthCm')
+
+plt.subplots(figsize=(8,8))
+sns.heatmap(df.corr(), annot=True, fmt='f').set_title("Correlation of attributes")
+
+x = df.iloc[:, 1:5].values
+x
+
+y = df.iloc[:, 5].values
+y
+
+from sklearn.preprocessing import LabelEncoder
+le = LabelEncoder()
+y = le.fit_transform(y)
+y
+
+from sklearn.model_selection import train_test_split as tts
+
+x_train, x_test, y_train, y_test = tts(x, y, test_size=0.3, random_state=42)
+
+from sklearn.naive_bayes import GaussianNB
+gB = GaussianNB()
+gB.fit(x_train, y_train)
+
+pred = gB.predict(x_test)
+pred
